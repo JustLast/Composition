@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Composition</string>
+
+    <!-- Welcome Fragment -->
+    <string name="logo">Welcome logo</string>
+    <string name="text_view_title">Состав числа</string>
+    <string name="text_view_rules">Правила игры: перед вами будет три фигуры, две снизу и одна сверху. В двух из них будут числа. Необходимо, чтобы сумма чисел из двух нижних фигур была равна числу в верхней фигуре, для этого нужно вставить недостающее число.\n\nПример: в верхнем круге число 7, в одном из нижних знак вопроса, а в другом число 4. Следовательно, на месте вопросительного знака должно быть число 4, потому что 3 + 4 = 7</string>
+    <string name="button_understand">Понятно</string>
+
+    <!-- Choose Level Fragment -->
+    <string name="level_text_view_title">Выберите уровень:</string>
+    <string name="level_button_level_test">Тестовый</string>
+    <string name="level_button_level_easy">Легкий</string>
+    <string name="level_button_level_normal">Средний</string>
+    <string name="level_button_level_hard">Тяжелый</string>
+
+    <!-- Game Fragment -->
+    <string name="text_view_second_question_mark"><![CDATA[&#063;]]></string>
+    <string name="text_view_answers_progress">Правильных ответов: %s (Минимум %s)</string>
+
+    <!-- Game Over Fragment -->
+    <string name="image_view_game_over_description">Game Over</string>
+    <string name="text_view_required_answers">Необходимое количество правильных ответов: %s</string>
+    <string name="text_view_score_answers">Ваш счет: %s</string>
+    <string name="text_view_required_answers_percent">Необходимый процент правильных ответов: %s</string>
+    <string name="text_view_answers_percent">Процент правильных ответов: %s</string>
+    <string name="button_try_again">Попробовать снова</string>
 </resources>
