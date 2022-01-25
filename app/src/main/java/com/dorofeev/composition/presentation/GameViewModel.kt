@@ -1,10 +1,12 @@
 package com.dorofeev.composition.presentation
 
 import android.app.Application
+import android.content.Context
 import android.os.CountDownTimer
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.dorofeev.composition.R
 import com.dorofeev.composition.data.GameRepositoryImpl
 import com.dorofeev.composition.domain.entity.GameResult
@@ -14,12 +16,12 @@ import com.dorofeev.composition.domain.entity.Question
 import com.dorofeev.composition.domain.usecases.GenerateQuestionUseCase
 import com.dorofeev.composition.domain.usecases.GetGameSettingsUseCase
 
-class GameViewModel(application: Application) : AndroidViewModel(application) {
+class GameViewModel(
+    private val application: Application,
+    private val level: Level
+) : ViewModel() {
 
     private lateinit var gameSettings: GameSettings
-    private lateinit var level: Level
-
-    private val context = application
 
     private val repository = GameRepositoryImpl
 
@@ -68,15 +70,18 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         private const val SECONDS_IN_MINUTES = 60
     }
 
-    fun startGame(level: Level) {
-        getGameSettings(level)
+    init {
+        startGame()
+    }
+
+    private fun startGame() {
+        getGameSettings()
         startTimer()
         generateQuestion()
         updateProgress()
     }
 
-    private fun getGameSettings(level: Level) {
-        this.level = level
+    private fun getGameSettings() {
         this.gameSettings = getGameSettingsUseCase(level)
         _minPercent.value = gameSettings.minPercentOfRightAnswers
     }
@@ -112,7 +117,7 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         val percent = calculatePercentOfRightAnswers()
         _percentOfRightAnswer.value = percent
         _progressAnswers.value = String.format(
-            context.resources.getString(R.string.text_view_answers_progress),
+            application.resources.getString(R.string.text_view_answers_progress),
             countOfRightAnswers,
             gameSettings.minCountOfRightAnswers
         )
