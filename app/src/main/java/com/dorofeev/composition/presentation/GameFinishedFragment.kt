@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.dorofeev.composition.R
 import com.dorofeev.composition.databinding.FragmentGameFinishedBinding
 import com.dorofeev.composition.domain.entity.GameResult
 import java.lang.RuntimeException
@@ -49,6 +50,11 @@ class GameFinishedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupClickListener()
+        bindViews()
+    }
+
+    private fun setupClickListener() {
         // Set a listener for "Back" button of activity
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, object: OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -65,6 +71,45 @@ class GameFinishedFragment : Fragment() {
         requireArguments().getParcelable<GameResult>(KEY_GAME_RESULT)?.let {
             gameResult = it
         }
+    }
+
+    private fun bindViews() {
+        binding.ivEmojiResult.setImageResource(getSmileImageResId())
+
+        binding.tvRequiredAnswers.text = String.format(
+            getString(R.string.text_view_required_answers),
+            gameResult.gameSettings.minCountOfRightAnswers
+        )
+
+        binding.tvScoreAnswers.text = String.format(
+            getString(R.string.text_view_score_answers),
+            gameResult.countOfRightAnswers
+        )
+
+        binding.tvRequiredAnswersPercent.text = String.format(
+            getString(R.string.text_view_required_answers_percent),
+            gameResult.gameSettings.minPercentOfRightAnswers
+        )
+
+        binding.tvAnswersPercent.text = String.format(
+            getString(R.string.text_view_answers_percent),
+            calculatePercentOfRightAnswers()
+        )
+    }
+
+    private fun getSmileImageResId(): Int {
+        return if (gameResult.winner) {
+            R.drawable.ic_emoji_smile_24
+        } else {
+            R.drawable.ic_emoji_cry_24
+        }
+    }
+
+    private fun calculatePercentOfRightAnswers(): Int {
+        if (gameResult.countOfQuestions == 0) {
+            return 0
+        }
+        return ((gameResult.countOfRightAnswers / gameResult.countOfQuestions.toDouble()) * 100).toInt()
     }
 
     private fun retryGame() {

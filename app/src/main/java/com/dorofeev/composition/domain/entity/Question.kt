@@ -1,9 +1,9 @@
 package com.dorofeev.composition.domain.entity
 
 data class Question(
-    private val sum: Int,
-    private val visibleNumber: Int,
-    private val options: List<Int>
+    val sum: Int,
+    val visibleNumber: Int,
+    val options: List<Int>
 ) {
     val rightAnswer: Int
         get() = sum - visibleNumber

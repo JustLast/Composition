@@ -15,7 +15,7 @@
     <string name="level_button_level_hard">Тяжелый</string>
 
     <!-- Game Fragment -->
-    <string name="text_view_second_question_mark"><![CDATA[&#063;]]></string>
+    <string name="text_view_second_question_mark">X</string>
     <string name="text_view_answers_progress">Правильных ответов: %s (Минимум %s)</string>
 
     <!-- Game Over Fragment -->
